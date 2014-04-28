@@ -22,8 +22,8 @@
 
 function gnu_pw_mgr_get_pass(elem, str, seed) {
     var out = "";
-    var result = yield shell_command_with_argument(
-        "gnu-pw-mgr -H \"{}\"", str,
+    var result = yield shell_command(
+        "gnu-pw-mgr -H \"" + str + "\"",
         $fds=[{output: async_binary_string_writer("")},
               {input: async_binary_reader(function (s) out += s || "") }]);
     if (seed > 0)
@@ -36,7 +36,7 @@ function gnu_pw_mgr_get_pass(elem, str, seed) {
 function gnu_pw_mgr_get_user(elem, str) {
     var out = "";
     var result = yield shell_command(
-        "gnu-pw-mgr \"{}\"", str,
+        "gnu-pw-mgr \"" + str + "\"",
         $fds=[{output: async_binary_string_writer("")},
               {input: async_binary_reader(function (s) out += s || "") }]);
     matches = /hint:\s*(\S+)\s*pw:/g.exec(out);
